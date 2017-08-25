@@ -18,14 +18,12 @@ class CategoryListItem extends Component {
     render() {
         const { category } = this.props;
         return (
-            <div className="category">
-                <Link 
-                    to={'/' + category.path}
-                    onClick={ () => this.getCategoryPosts() }
-                >
-                    {category.name}
-                </Link>
-            </div>
+            <Link 
+                to={'/' + category.path}
+                onClick={ () => this.getCategoryPosts() }
+            >
+                {category.name}
+            </Link>
         );
     }
 }

@@ -58,6 +58,7 @@ class App extends Component {
             return( 
               <PostList 
                 posts={posts}
+                dispatch={dispatch}
               />
             )
           }
@@ -67,6 +68,7 @@ class App extends Component {
             return (
               <PostList 
                 posts={posts}
+                dispatch={dispatch}
               />
             )
           }
