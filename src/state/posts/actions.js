@@ -1,4 +1,8 @@
-import { sendScoreUpdate } from '../../utils/readableAPI';
+import { 
+    sendScoreUpdate,
+    sendNewPost
+} from '../../utils/readableAPI';
+import { uuid } from '../../utils/formatters';
 
 import {
     POSTS_CREATE,
@@ -58,6 +62,22 @@ export const postsVote = (id, direction) => {
             data: {
                 id,
                 voteScore: score
+            }
+        })
+    }
+};
+
+export const postsNew = (data) => {
+    return (dispatch) => {
+        const { title, author, body, category } = data;
+        const timestamp = Date.now();
+        const id = uuid();
+        const post = Object.assign({}, data, { timestamp, id });
+        sendNewPost(post);
+        dispatch({
+            type: POSTS_CREATE,
+            data: {
+                post
             }
         })
     }

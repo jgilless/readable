@@ -80,3 +80,43 @@ body {
   font-size: 1rem;
   text-align: center;
 }
+
+.action-button {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  color: white;
+  background-color: #BF4B96;
+  font-size: 3rem;
+  display: flex;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.form-item {
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0 1rem;
+  border: 1px solid #113E2E;
+  width: 100%;
+}
+
+.form-label {
+  margin-top: 1rem;
+}
+
+.form-submit-button {
+  color: white;
+  background: #BF4B96;
+  margin-top: 1rem;
+  width: 25%;
+}
