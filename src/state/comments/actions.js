@@ -1,4 +1,8 @@
-import { sendScoreUpdate } from '../../utils/readableAPI';
+import { 
+    sendScoreUpdate,
+    sendNewComment
+} from '../../utils/readableAPI';
+import { uuid } from '../../utils/formatters';
 
 import {
     COMMENTS_SET,
@@ -18,14 +22,15 @@ const propList = [
     'parentDeleted'
 ];
 
-export const commentsSort = (property) => {
+export const commentsSort = (property, direction = 'desc') => {
     if (propList.indexOf(property) === -1) {
         return {};
     }
     return {
         type: COMMENTS_SORT,
         data: {
-            property
+            property,
+            direction
         }
     }
 };
@@ -58,6 +63,21 @@ export const commentsVote = (id, direction) => {
             data: {
                 id,
                 voteScore: score
+            }
+        })
+    }
+};
+
+export const commentsNew = (data) => {
+    return (dispatch) => {
+        const timestamp = Date.now();
+        const id = uuid();
+        const comment = Object.assign({}, data, { timestamp, id });
+        sendNewComment(comment);
+        dispatch({
+            type: COMMENTS_CREATE,
+            data: {
+                comment
             }
         })
     }

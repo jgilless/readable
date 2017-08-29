@@ -22,14 +22,15 @@ const propList = [
     'deleted'
 ];
 
-export const postsSort = (property) => {
+export const postsSort = (property, direction = 'desc') => {
     if (propList.indexOf(property) === -1) {
         return {};
     }
     return {
         type: POSTS_SORT,
         data: {
-            property
+            property,
+            direction
         }
     }
 };

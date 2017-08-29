@@ -47,3 +47,8 @@ export const sendNewPost = (data) => {
     return fetch(`http://localhost:5001/posts`, postHeaders(data))
         .then((res) => res.json());
 };
+
+export const sendNewComment = (data) => {
+    return fetch(`http://localhost:5001/comments`, postHeaders(data))
+        .then((res) => res.json());
+};
