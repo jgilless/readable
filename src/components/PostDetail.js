@@ -1,14 +1,15 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import PostComments from "./PostComments";
-import Voting from "./Voting";
-import ActionButton from "./ActionButton";
-import SortBy from "./SortBy";
+import PostComments from './PostComments';
+import Voting from './Voting';
+import ActionButton from './ActionButton';
+import SortBy from './SortBy';
+import EditDelete from './EditDelete';
 
-import { humanDateFromTimestamp } from "../utils/formatters";
-import { fetchPostByID } from "../utils/readableAPI";
-import { postsSet } from "../state/posts/actions";
+import { humanDateFromTimestamp } from '../utils/formatters';
+import { fetchPostByID } from '../utils/readableAPI';
+import { postsSet } from '../state/posts/actions';
 
 class PostDetail extends Component {
   componentDidMount() {
@@ -29,6 +30,7 @@ class PostDetail extends Component {
 
     return (
       <div className="container">
+        <EditDelete type="post" id={post.id} post={post} dispatch={dispatch} />
         <div className="post-info-container">
           <div className="title-vote">
             <Voting
@@ -42,8 +44,8 @@ class PostDetail extends Component {
           <span>By {post.author}</span>
           <span> on {humanDateFromTimestamp(post.timestamp)}</span>
           <span>
-            {" "}
-            in <Link to={"/" + post.category}>{post.category}</Link>
+            {' '}
+            in <Link to={'/' + post.category}>{post.category}</Link>
           </span>
         </div>
         <div className="post-body">
@@ -51,11 +53,7 @@ class PostDetail extends Component {
         </div>
         <h4>Comments:</h4>
         <SortBy type="comments" dispatch={dispatch} />
-        <PostComments
-          postId={post.id}
-          comments={comments}
-          dispatch={dispatch}
-        />
+        <PostComments post={post} comments={comments} dispatch={dispatch} />
         <ActionButton destination={`/${post.category}/${post.id}/comment`} />
       </div>
     );

@@ -1,31 +1,15 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import CategoryList from "./CategoryList";
-
-import { fetchPosts } from "../utils/readableAPI";
-import { postsSet } from "../state/posts/actions";
+import CategoryList from './CategoryList';
 
 class NavBar extends Component {
-  getHomePosts = () => {
-    const { dispatch } = this.props;
-    fetchPosts().then(posts => {
-      dispatch(postsSet(posts));
-    });
-  };
-
-  testPrettier = () => {
-    console.log("object");
-  };
-
   render() {
     const { dispatch, categories } = this.props;
     return (
       <nav id="navbar">
         <div className="homeBtn">
-          <Link to="/" onClick={() => this.getHomePosts()}>
-            Home
-          </Link>
+          <Link to="/">Home</Link>
         </div>
         <CategoryList categories={categories} dispatch={dispatch} />
       </nav>

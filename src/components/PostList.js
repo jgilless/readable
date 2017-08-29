@@ -1,20 +1,17 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import PostListItem from "./PostListItem";
-import ActionButton from "./ActionButton";
+import PostListItem from './PostListItem';
+import ActionButton from './ActionButton';
 
-import SortBy from "./SortBy";
+import SortBy from './SortBy';
 
-import { fetchCategoryPosts, fetchPosts } from "../utils/readableAPI";
+import { fetchCategoryPosts, fetchPosts } from '../utils/readableAPI';
 
-import { postsSet } from "../state/posts/actions";
+import { postsSet } from '../state/posts/actions';
 
 class PostList extends Component {
   componentDidMount() {
     const { posts, match, dispatch } = this.props;
-    if (posts.length !== 0) {
-      return;
-    }
     if (match.params.category) {
       fetchCategoryPosts(match.params.category).then(posts => {
         dispatch(postsSet(posts));

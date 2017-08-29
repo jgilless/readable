@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import { humanDateFromTimestamp } from "../utils/formatters";
+import { humanDateFromTimestamp } from '../utils/formatters';
 
-import Voting from "./Voting";
+import Voting from './Voting';
 
 class CommentDetail extends Component {
   render() {
@@ -10,15 +10,9 @@ class CommentDetail extends Component {
 
     return (
       <div className="list-item-container">
-        <Voting
-          id={comment.id}
-          type="comment"
-          score={comment.voteScore}
-          dispatch={dispatch}
-        />
         <div className="list-item-detail">
           <p>
-            {comment.author} at{" "}
+            {comment.author} at{' '}
             <time>{humanDateFromTimestamp(comment.timestamp)}</time>
           </p>
           <p>{comment.body}</p>

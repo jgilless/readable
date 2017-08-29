@@ -1,17 +1,21 @@
-import { sendScoreUpdate, sendNewPost } from "../../utils/readableAPI";
-import { uuid } from "../../utils/formatters";
+import {
+  sendScoreUpdate,
+  sendNewPost,
+  sendDeletePost
+} from '../../utils/readableAPI';
+import { uuid } from '../../utils/formatters';
 
-import { POSTS_CREATE, POSTS_UPDATE, POSTS_SORT, POSTS_SET } from "./constants";
+import { POSTS_CREATE, POSTS_UPDATE, POSTS_SORT, POSTS_SET } from './constants';
 
 const propList = [
-  "id",
-  "timestamp",
-  "title",
-  "body",
-  "author",
-  "category",
-  "voteScore",
-  "deleted"
+  'id',
+  'timestamp',
+  'title',
+  'body',
+  'author',
+  'category',
+  'voteScore',
+  'deleted'
 ];
 
 /**
@@ -19,7 +23,7 @@ const propList = [
  * @param {string} property anything included in propList
  * @param {string} direction asc/desc
  */
-export const postsSort = (property, direction = "desc") => {
+export const postsSort = (property, direction = 'desc') => {
   if (propList.indexOf(property) === -1) {
     return {};
   }
@@ -53,12 +57,12 @@ export const postsSet = posts => {
 export const postsVote = (id, direction) => {
   return (dispatch, getState) => {
     const { items } = getState().posts;
-    sendScoreUpdate(id, "posts", direction);
+    sendScoreUpdate(id, 'posts', direction);
     let score = items.find(item => {
       return item.id === id;
     }).voteScore;
 
-    if (direction === "upVote") {
+    if (direction === 'upVote') {
       score += 1;
     } else {
       score -= 1;
@@ -88,6 +92,23 @@ export const postsNew = data => {
       type: POSTS_CREATE,
       data: {
         post
+      }
+    });
+  };
+};
+
+/**
+ * sets a post to deleted in the reducer
+ * @param {string} id post unique identifier
+ */
+export const postsDelete = id => {
+  return dispatch => {
+    sendDeletePost(id);
+    dispatch({
+      type: POSTS_UPDATE,
+      data: {
+        id,
+        deleted: true
       }
     });
   };

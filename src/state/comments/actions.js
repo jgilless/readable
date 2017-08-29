@@ -1,22 +1,26 @@
-import { sendScoreUpdate, sendNewComment } from "../../utils/readableAPI";
-import { uuid } from "../../utils/formatters";
+import {
+  sendScoreUpdate,
+  sendNewComment,
+  sendDeleteComment
+} from '../../utils/readableAPI';
+import { uuid } from '../../utils/formatters';
 
 import {
   COMMENTS_SET,
   COMMENTS_CREATE,
   COMMENTS_UPDATE,
   COMMENTS_SORT
-} from "./constants";
+} from './constants';
 
 const propList = [
-  "id",
-  "parentId",
-  "timestamp",
-  "body",
-  "author",
-  "voteScore",
-  "deleted",
-  "parentDeleted"
+  'id',
+  'parentId',
+  'timestamp',
+  'body',
+  'author',
+  'voteScore',
+  'deleted',
+  'parentDeleted'
 ];
 
 /**
@@ -24,7 +28,7 @@ const propList = [
  * @param {string} property must be contained in propList
  * @param {string} direction asc/desc
  */
-export const commentsSort = (property, direction = "desc") => {
+export const commentsSort = (property, direction = 'desc') => {
   if (propList.indexOf(property) === -1) {
     return {};
   }
@@ -58,12 +62,12 @@ export const commentsSet = comments => {
 export const commentsVote = (id, direction) => {
   return (dispatch, getState) => {
     const { items } = getState().comments;
-    sendScoreUpdate(id, "comments", direction);
+    sendScoreUpdate(id, 'comments', direction);
     let score = items.find(item => {
       return item.id === id;
     }).voteScore;
 
-    if (direction === "upVote") {
+    if (direction === 'upVote') {
       score += 1;
     } else {
       score -= 1;
@@ -93,6 +97,23 @@ export const commentsNew = data => {
       type: COMMENTS_CREATE,
       data: {
         comment
+      }
+    });
+  };
+};
+
+/**
+ * sets a post to deleted in the reducer
+ * @param {string} id post unique identifier
+ */
+export const commentsDelete = id => {
+  return dispatch => {
+    sendDeleteComment(id);
+    dispatch({
+      type: COMMENTS_UPDATE,
+      data: {
+        id,
+        deleted: true
       }
     });
   };
