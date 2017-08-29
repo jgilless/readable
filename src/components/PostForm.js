@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 
 import { postsNew } from "../state/posts/actions";
 
 class PostForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
-    const { dispatch } = this.props;
+    const { dispatch, history } = this.props;
     //Validation of empty case
     if (!this.title.value) {
       alert("Title field cannot be empty");
@@ -27,6 +28,7 @@ class PostForm extends Component {
       body: this.body.value
     };
     dispatch(postsNew(post));
+    history.push(`/${this.category.value}`);
   };
 
   render() {
@@ -94,4 +96,4 @@ class PostForm extends Component {
   }
 }
 
-export default PostForm;
+export default withRouter(PostForm);

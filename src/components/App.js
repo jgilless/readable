@@ -71,6 +71,7 @@ class App extends Component {
           }}
         />
         <Route
+          exact
           path="/:category/:id"
           render={({ match }) => {
             if (!this.checkCategory(match.params.category)) {
@@ -89,7 +90,8 @@ class App extends Component {
           }}
         />
         <Route
-          path="/posts/:id/comment"
+          exact
+          path="/:category/:id/comment"
           render={({ match }) => {
             const { id } = match.params;
             const post = this.findPost(id);

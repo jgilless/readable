@@ -20,6 +20,7 @@ class PostDetail extends Component {
       dispatch(postsSet([post]));
     });
   }
+
   render() {
     const { dispatch, post, comments } = this.props;
     if (!post) {
@@ -55,7 +56,7 @@ class PostDetail extends Component {
           comments={comments}
           dispatch={dispatch}
         />
-        <ActionButton destination={`/posts/${post.id}/comment`} />
+        <ActionButton destination={`/${post.category}/${post.id}/comment`} />
       </div>
     );
   }
