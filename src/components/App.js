@@ -20,6 +20,11 @@ class App extends Component {
     });
   }
 
+  findComment = id => {
+    const { comments } = this.props;
+    return comments.items.find(comment => comment.id === id);
+  };
+
   findPost = id => {
     const { posts } = this.props;
     return posts.items.find(post => post.id === id);
@@ -54,8 +59,14 @@ class App extends Component {
         <Route
           exact
           path="/posts/new"
-          render={() => {
-            return <PostForm dispatch={dispatch} categories={categories} />;
+          render={({ match }) => {
+            return (
+              <PostForm
+                dispatch={dispatch}
+                categories={categories}
+                match={match}
+              />
+            );
           }}
         />
         <Route
@@ -91,11 +102,42 @@ class App extends Component {
         />
         <Route
           exact
-          path="/:category/:id/comment"
+          path="/:category/:postId/comment"
+          render={({ match }) => {
+            const { postId } = match.params;
+            const post = this.findPost(postId);
+            return <CommentForm post={post} dispatch={dispatch} />;
+          }}
+        />
+        <Route
+          exact
+          path="/posts/edit/:id"
           render={({ match }) => {
             const { id } = match.params;
             const post = this.findPost(id);
-            return <CommentForm post={post} dispatch={dispatch} />;
+            return (
+              <PostForm
+                post={post}
+                dispatch={dispatch}
+                categories={categories}
+                match={match}
+              />
+            );
+          }}
+        />
+        <Route
+          exact
+          path="/:category/:postId/comment/:commentId"
+          render={({ match }) => {
+            const { commentId } = match.params;
+            const comment = this.findComment(commentId);
+            let post = null;
+            if (comment) {
+              post = this.findPost(comment.parentId);
+            }
+            return (
+              <CommentForm post={post} dispatch={dispatch} comment={comment} />
+            );
           }}
         />
       </div>

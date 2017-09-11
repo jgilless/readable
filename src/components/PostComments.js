@@ -5,6 +5,8 @@ import { commentsSet } from '../state/comments/actions';
 
 import CommentDetail from './CommentDetail';
 import EditDelete from './EditDelete';
+import SortBy from './SortBy';
+import Voting from './Voting';
 
 class PostComments extends Component {
   componentDidMount() {
@@ -17,21 +19,31 @@ class PostComments extends Component {
   render() {
     const { comments, dispatch, post } = this.props;
     return (
-      <ul className="list-container">
-        {comments.map(comment => {
-          return (
-            <li key={comment.id}>
-              <CommentDetail comment={comment} dispatch={dispatch} />
-              <EditDelete
-                type="comment"
-                id={comment.id}
-                post={post}
-                dispatch={dispatch}
-              />
-            </li>
-          );
-        })}
-      </ul>
+      <div>
+        <h4>{comments.length} comments</h4>
+        <SortBy type="comments" dispatch={dispatch} />
+        <ul className="list-container">
+          {comments.map(comment => {
+            return (
+              <li className="list-item-container" key={comment.id}>
+                <Voting
+                  score={comment.voteScore}
+                  id={comment.id}
+                  dispatch={dispatch}
+                  type="comment"
+                />
+                <CommentDetail comment={comment} dispatch={dispatch} />
+                <EditDelete
+                  type="comment"
+                  id={comment.id}
+                  post={post}
+                  dispatch={dispatch}
+                />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     );
   }
 }

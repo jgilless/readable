@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import MdEdit from 'react-icons/lib/md/edit';
 import MdDelete from 'react-icons/lib/md/delete';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 
 import { postsDelete } from '../state/posts/actions';
 import { commentsDelete } from '../state/comments/actions';
 
 class EditDelete extends Component {
   handleEdit = () => {
-    console.log(this);
+    const { id, type, history, post } = this.props;
+    if (type === 'post') {
+      history.push(`/posts/edit/${id}`);
+    } else if (type === 'comment') {
+      history.push(`/${post.category}/${post.id}/comment/${id}`);
+    }
   };
 
   handleDelete = () => {

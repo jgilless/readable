@@ -1,7 +1,8 @@
 import {
   sendScoreUpdate,
   sendNewComment,
-  sendDeleteComment
+  sendDeleteComment,
+  sendUpdateComment
 } from '../../utils/readableAPI';
 import { uuid } from '../../utils/formatters';
 
@@ -114,6 +115,24 @@ export const commentsDelete = id => {
       data: {
         id,
         deleted: true
+      }
+    });
+  };
+};
+
+/**
+ * Updates a post model and sends an
+ * @param {string} id 
+ * @param {object} data {title, body} both strings
+ */
+export const commentsUpdate = (id, data) => {
+  return dispatch => {
+    sendUpdateComment(id, data);
+    const commentData = Object.assign({}, { id }, data);
+    dispatch({
+      type: COMMENTS_UPDATE,
+      data: {
+        commentData
       }
     });
   };

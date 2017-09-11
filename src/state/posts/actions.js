@@ -1,7 +1,9 @@
 import {
   sendScoreUpdate,
   sendNewPost,
-  sendDeletePost
+  sendDeletePost,
+  sendUpdatePost,
+  fetchPostComments
 } from '../../utils/readableAPI';
 import { uuid } from '../../utils/formatters';
 
@@ -41,11 +43,28 @@ export const postsSort = (property, direction = 'desc') => {
  * @param {array} posts 
  */
 export const postsSet = posts => {
-  return {
-    type: POSTS_SET,
-    data: {
-      posts
-    }
+  return dispatch => {
+    dispatch({
+      type: POSTS_SET,
+      data: {
+        posts: []
+      }
+    });
+    posts.map(post => {
+      fetchPostComments(post.id)
+        .then(results => {
+          return results.length;
+        })
+        .then(length => {
+          dispatch({
+            type: POSTS_CREATE,
+            data: {
+              post: Object.assign({}, post, { commentCount: length })
+            }
+          });
+        });
+      return post;
+    });
   };
 };
 
@@ -111,5 +130,38 @@ export const postsDelete = id => {
         deleted: true
       }
     });
+  };
+};
+
+/**
+ * Updates a post model and sends an
+ * @param {string} id 
+ * @param {object} data {title, body} both strings
+ */
+export const postsUpdate = (id, data) => {
+  return dispatch => {
+    sendUpdatePost(id, data);
+    const postData = Object.assign({}, { id }, data);
+    dispatch({
+      type: POSTS_UPDATE,
+      data: {
+        postData
+      }
+    });
+  };
+};
+
+/**
+ * Sets comment count
+ * @param {string} id 
+ * @param {int} count 
+ */
+export const postsSetCommentCount = (id, count) => {
+  return {
+    type: POSTS_UPDATE,
+    data: {
+      id,
+      commentCount: count
+    }
   };
 };

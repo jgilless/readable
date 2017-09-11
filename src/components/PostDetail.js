@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import PostComments from './PostComments';
 import Voting from './Voting';
 import ActionButton from './ActionButton';
-import SortBy from './SortBy';
 import EditDelete from './EditDelete';
 
 import { humanDateFromTimestamp } from '../utils/formatters';
@@ -30,7 +29,6 @@ class PostDetail extends Component {
 
     return (
       <div className="container">
-        <EditDelete type="post" id={post.id} post={post} dispatch={dispatch} />
         <div className="post-info-container">
           <div className="title-vote">
             <Voting
@@ -40,6 +38,12 @@ class PostDetail extends Component {
               type="post"
             />
             <h1>{post.title}</h1>
+            <EditDelete
+              type="post"
+              id={post.id}
+              post={post}
+              dispatch={dispatch}
+            />
           </div>
           <span>By {post.author}</span>
           <span> on {humanDateFromTimestamp(post.timestamp)}</span>
@@ -51,8 +55,7 @@ class PostDetail extends Component {
         <div className="post-body">
           <p>{post.body}</p>
         </div>
-        <h4>Comments:</h4>
-        <SortBy type="comments" dispatch={dispatch} />
+
         <PostComments post={post} comments={comments} dispatch={dispatch} />
         <ActionButton destination={`/${post.category}/${post.id}/comment`} />
       </div>

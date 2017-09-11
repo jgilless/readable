@@ -1,8 +1,8 @@
-import { POSTS_CREATE, POSTS_UPDATE, POSTS_SORT, POSTS_SET } from "./constants";
+import { POSTS_CREATE, POSTS_UPDATE, POSTS_SORT, POSTS_SET } from './constants';
 
 const defaultState = {
-  orderBy: "voteScore",
-  orderDir: "desc",
+  orderBy: 'voteScore',
+  orderDir: 'desc',
   items: []
 };
 
@@ -15,6 +15,13 @@ export default (state = defaultState, action) => {
         items: data.posts
       });
     case POSTS_CREATE:
+      let exists = state.items.find(item => {
+        return item.id === data.post.id;
+      });
+
+      if (exists) {
+        return state;
+      }
       return Object.assign({}, state, {
         items: [...state.items, data.post]
       });

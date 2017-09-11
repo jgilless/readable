@@ -11,7 +11,7 @@ import { postsSet } from '../state/posts/actions';
 
 class PostList extends Component {
   componentDidMount() {
-    const { posts, match, dispatch } = this.props;
+    const { match, dispatch } = this.props;
     if (match.params.category) {
       fetchCategoryPosts(match.params.category).then(posts => {
         dispatch(postsSet(posts));
@@ -24,15 +24,17 @@ class PostList extends Component {
   }
 
   render() {
-    const { posts, dispatch } = this.props;
+    const { match, posts, dispatch } = this.props;
+    const heading = match.params.category ? match.params.category : 'home';
     return (
       <div>
-        <SortBy type="posts" dispatch={dispatch} />
         <div className="container">
+          <h1 className="list-heading">{heading}</h1>
+          <SortBy type="posts" dispatch={dispatch} />
           <ul className="list-container">
             {posts.map(post => {
               return (
-                <li key={post.id}>
+                <li className="post-list-item" key={post.id}>
                   <PostListItem post={post} dispatch={dispatch} />
                 </li>
               );

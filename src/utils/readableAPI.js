@@ -18,6 +18,14 @@ const deleteHeaders = () => {
   };
 };
 
+const putHeaders = data => {
+  return {
+    method: 'PUT',
+    headers: headers,
+    body: JSON.stringify(data)
+  };
+};
+
 export const fetchCategories = () => {
   return fetch('http://localhost:5001/categories', { headers })
     .then(res => res.json())
@@ -38,6 +46,12 @@ export const fetchPosts = () => {
 
 export const fetchPostByID = id => {
   return fetch(`http://localhost:5001/posts/${id}`, { headers }).then(res =>
+    res.json()
+  );
+};
+
+export const fetchCommentByID = id => {
+  return fetch(`http://localhost:5001/comments/${id}`, { headers }).then(res =>
     res.json()
   );
 };
@@ -74,4 +88,22 @@ export const sendDeleteComment = id => {
 
 export const sendDeletePost = id => {
   return fetch(`http://localhost:5001/posts/${id}`, deleteHeaders());
+};
+
+export const sendUpdatePost = (id, data) => {
+  return fetch(
+    `http://localhost:5001/posts/${id}`,
+    putHeaders(data)
+  ).then(res => {
+    res.json();
+  });
+};
+
+export const sendUpdateComment = (id, data) => {
+  return fetch(
+    `http://localhost:5001/comments/${id}`,
+    putHeaders(data)
+  ).then(res => {
+    res.json();
+  });
 };
