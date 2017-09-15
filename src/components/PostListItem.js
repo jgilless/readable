@@ -5,29 +5,27 @@ import Voting from './Voting';
 import CommentCount from './CommentCount';
 import { humanDateFromTimestamp } from '../utils/formatters';
 
-class PostListItem extends Component {
-  render() {
-    const { post, dispatch } = this.props;
-    return (
-      <div className="list-item-container">
-        <Voting
-          id={post.id}
-          type="post"
-          score={post.voteScore}
-          dispatch={dispatch}
-        />
-        <div className="list-item-detail">
-          <p>
-            {post.author} on {humanDateFromTimestamp(post.timestamp)}
-          </p>
-          <p>
-            <Link to={'/' + post.category + '/' + post.id}>{post.title}</Link>
-          </p>
-          <CommentCount count={post.commentCount} />
-        </div>
+const PostListItem = props => {
+  const { post, dispatch } = props;
+  return (
+    <div className="list-item-container">
+      <Voting
+        id={post.id}
+        type="post"
+        score={post.voteScore}
+        dispatch={dispatch}
+      />
+      <div className="list-item-detail">
+        <p>
+          {post.author} on {humanDateFromTimestamp(post.timestamp)}
+        </p>
+        <p>
+          <Link to={'/' + post.category + '/' + post.id}>{post.title}</Link>
+        </p>
+        <CommentCount count={post.commentCount} />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default PostListItem;

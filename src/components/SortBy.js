@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import { postsSort } from "../state/posts/actions";
-import { commentsSort } from "../state/comments/actions";
+import { postsSort } from '../state/posts/actions';
+import { commentsSort } from '../state/comments/actions';
 
 class SortBy extends Component {
   updateOrder = () => {
     const { dispatch, type } = this.props;
-    if (type === "posts") {
+    if (type === 'posts') {
       dispatch(postsSort(this.orderBy.value, this.orderDir.value));
-    } else if (type === "comments") {
+    } else {
       dispatch(commentsSort(this.orderBy.value, this.orderDir.value));
     }
   };

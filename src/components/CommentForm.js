@@ -48,8 +48,8 @@ class CommentForm extends Component {
 
   render() {
     const { comment } = this.props;
-    const author = comment ? comment.author : '';
-    const body = comment ? comment.body : '';
+    const author = comment ? comment.author : 'Comment Author';
+    const body = comment ? comment.body : 'Comment body';
     let authorNode = (
       <label className="form-label">
         <div className="form-label-text">Author</div>

@@ -52,10 +52,10 @@ class PostForm extends Component {
 
   render() {
     const { post, categories } = this.props;
-    const title = post ? post.title : '';
-    const author = post ? post.author : '';
-    const body = post ? post.body : '';
-    const category = post ? post.category : '';
+    const title = post ? post.title : 'Post title';
+    const author = post ? post.author : 'Post author';
+    const body = post ? post.body : 'Post body';
+    const category = post ? post.category : 'react';
 
     let authorNode = (
       <label className="form-label">
