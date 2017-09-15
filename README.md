@@ -21,6 +21,35 @@ If you have Node installed, you have NPM, if not install node:
 * [Node](https://nodejs.org/en/)
 
 ### Installing
+
+First install the server.  You can get the code here: [https://github.com/udacity/reactnd-project-readable-starter](https://github.com/udacity/reactnd-project-readable-starter)
+
+clone the repo: 
+
+```
+git clone https://github.com/udacity/reactnd-project-readable-starter.git
+```
+
+Change directories to the server:
+
+```
+cd reactnd-project-readable-starter/api-server
+```
+
+Install the server:
+
+```
+npm install
+```
+
+Start the server:
+
+```
+node server
+```
+
+From the root of this repo, it's time to install and run this app.
+
 Run:
 ```
 npm install
